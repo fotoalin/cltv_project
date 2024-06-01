@@ -20,7 +20,8 @@
                 <strong>Average Purchase Value (APV):</strong> £{{ detailed_data.apv|truncate_float }}<br>
                 <strong>Average Purchase Frequency Rate (APFR):</strong> {{ detailed_data.apfr|truncate_float }}<br>
                 <strong>Customer Value (CV):</strong> £{{ detailed_data.cv|truncate_float }}<br>
-                <strong>Time Interval:</strong> {{ detailed_data.overall_start_date }} to {{ detailed_data.overall_end_date }}
+                <strong>Time Interval:</strong> {{ detailed_data.overall_start_date }} to {{ detailed_data.overall_end_date }}<br>
+                <strong>Customer Acquisition Cost (CAC):</strong> £{{ detailed_data.cac|truncate_float }}
             </p>
         </div>
     </div>
@@ -37,6 +38,7 @@
                 <li><strong>Average Purchase Frequency Rate (APFR):</strong> The average number of purchases per customer. Calculated as Number of Purchases divided by Number of Customers.</li>
                 <li><strong>Customer Value (CV):</strong> The average revenue generated per customer. Calculated as APV multiplied by APFR.</li>
                 <li><strong>Time Interval:</strong> The time span between the earliest start date and the latest end date in the dataset.</li>
+                <li><strong>Customer Acquisition Cost (CAC):</strong> The amount the company can afford to spend on acquiring a new customer. Typically, this is a percentage of the CLTV. In this case, we assume the company can spend up to 30% of the CLTV.</li>
             </ul>
         </div>
     </div>

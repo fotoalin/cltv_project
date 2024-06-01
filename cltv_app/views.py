@@ -44,6 +44,9 @@ def calculate_cltv(data):
         customer_data["start_date"] = customer_data["start_date"].dt.date.astype(str)
         customer_data["end_date"] = customer_data["end_date"].dt.date.astype(str)
 
+        # Calculate Customer Acquisition Cost (CAC) as 30% of CLTV
+        cac = cltv * 0.30
+
         return {
             "cltv": float(cltv),
             "avg_customer_lifespan": float(avg_customer_lifespan),
@@ -59,6 +62,7 @@ def calculate_cltv(data):
             "overall_start_date": overall_start_date,
             "overall_end_date": overall_end_date,
             "customer_data": customer_data.to_dict(orient="records"),
+            "cac": float(cac),
         }
     except Exception as e:
         raise ValueError("Error in calculating CLTV: " + str(e))
