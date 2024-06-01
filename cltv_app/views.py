@@ -38,6 +38,12 @@ def calculate_cltv(data):
         cv = apv * apfr
         cltv = cv * avg_customer_lifespan
 
+        overall_start_date = customer_data["start_date"].min().isoformat()
+        overall_end_date = customer_data["end_date"].max().isoformat()
+
+        customer_data["start_date"] = customer_data["start_date"].dt.date.astype(str)
+        customer_data["end_date"] = customer_data["end_date"].dt.date.astype(str)
+
         return {
             "cltv": float(cltv),
             "avg_customer_lifespan": float(avg_customer_lifespan),
@@ -50,6 +56,9 @@ def calculate_cltv(data):
             "individual_lifespans": [
                 float(lifespan) for lifespan in customer_data["lifespan"]
             ],
+            "overall_start_date": overall_start_date,
+            "overall_end_date": overall_end_date,
+            "customer_data": customer_data.to_dict(orient="records"),
         }
     except Exception as e:
         raise ValueError("Error in calculating CLTV: " + str(e))
