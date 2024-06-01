@@ -47,6 +47,9 @@ def calculate_cltv(data):
         # Calculate Customer Acquisition Cost (CAC) as 30% of CLTV
         cac = cltv * 0.30
 
+        # Calculate Average Number of Purchases per Customer
+        avg_num_purchases = num_purchases / num_customers
+
         return {
             "cltv": float(cltv),
             "avg_customer_lifespan": float(avg_customer_lifespan),
@@ -63,6 +66,7 @@ def calculate_cltv(data):
             "overall_end_date": overall_end_date,
             "customer_data": customer_data.to_dict(orient="records"),
             "cac": float(cac),
+            "avg_num_purchases": float(avg_num_purchases),
         }
     except Exception as e:
         raise ValueError("Error in calculating CLTV: " + str(e))
