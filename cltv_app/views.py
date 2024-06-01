@@ -10,15 +10,28 @@ from .models import CLTVResult, CustomerData
 
 def calculate_cltv(data):
     try:
-        data["start_date"] = pd.to_datetime(data["start_date"])
-        data["end_date"] = pd.to_datetime(data["end_date"])
+        data["order_date"] = pd.to_datetime(data["order_date"])
 
-        data["lifespan"] = (data["end_date"] - data["start_date"]).dt.days / 365.25
+        # Aggregate data per customer
+        customer_data = (
+            data.groupby("customer_id")
+            .agg(
+                start_date=("order_date", "min"),
+                end_date=("order_date", "max"),
+                revenue=("revenue", "sum"),
+                num_purchases=("order_id", "count"),
+            )
+            .reset_index()
+        )
 
-        avg_customer_lifespan = data["lifespan"].mean().item()
-        total_revenue = data["revenue"].sum().item()
-        num_purchases = data["num_purchases"].sum().item()
-        num_customers = int(data.shape[0])
+        customer_data["lifespan"] = (
+            customer_data["end_date"] - customer_data["start_date"]
+        ).dt.days / 365.25
+
+        avg_customer_lifespan = customer_data["lifespan"].mean().item()
+        total_revenue = customer_data["revenue"].sum().item()
+        num_purchases = customer_data["num_purchases"].sum().item()
+        num_customers = int(customer_data.shape[0])
 
         apv = total_revenue / num_purchases
         apfr = num_purchases / num_customers
@@ -34,7 +47,9 @@ def calculate_cltv(data):
             "apv": float(apv),
             "apfr": float(apfr),
             "cv": float(cv),
-            "individual_lifespans": [float(lifespan) for lifespan in data["lifespan"]],
+            "individual_lifespans": [
+                float(lifespan) for lifespan in customer_data["lifespan"]
+            ],
         }
     except Exception as e:
         raise ValueError("Error in calculating CLTV: " + str(e))
@@ -49,13 +64,7 @@ def upload_file(request):
             try:
                 data = pd.read_excel(file)
                 # Validate data
-                required_columns = {
-                    "customer_id",
-                    "start_date",
-                    "end_date",
-                    "revenue",
-                    "num_purchases",
-                }
+                required_columns = {"order_id", "customer_id", "order_date", "revenue"}
                 if not required_columns.issubset(data.columns):
                     messages.error(
                         request,
