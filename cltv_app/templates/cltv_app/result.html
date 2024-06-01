@@ -1,0 +1,40 @@
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CLTV Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Customer Lifetime Value (CLTV) Result</h1>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">CLTV: £{{ cltv_result.cltv|truncate_float }}</h5>
+            <p class="card-text">
+                <strong>Average Customer Lifespan:</strong> {{ detailed_data.avg_customer_lifespan|truncate_float }} years<br>
+                <strong>Total Revenue:</strong> £{{ detailed_data.total_revenue|truncate_float }}<br>
+                <strong>Number of Purchases:</strong> {{ detailed_data.num_purchases }}<br>
+                <strong>Number of Customers:</strong> {{ detailed_data.num_customers }}<br>
+                <strong>Average Purchase Value (APV):</strong> £{{ detailed_data.apv|truncate_float }}<br>
+                <strong>Average Purchase Frequency Rate (APFR):</strong> {{ detailed_data.apfr|truncate_float }}<br>
+                <strong>Customer Value (CV):</strong> £{{ detailed_data.cv|truncate_float }}
+            </p>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Individual Customer Lifespans</h5>
+            <ul class="list-group">
+                {% for lifespan in detailed_data.individual_lifespans %}
+                <li class="list-group-item">Customer {{ forloop.counter }}: {{ lifespan|truncate_float:1 }} years</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <a href="{% url 'upload_file' %}" class="btn btn-primary mt-3">Upload Another File</a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
