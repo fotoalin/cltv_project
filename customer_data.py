@@ -2,10 +2,10 @@ import numpy as np
 import pandas as pd
 
 # Parameters
-num_customers = 10
+num_customers = 1500
 orders_per_customer = 5
 start_date = pd.Timestamp("2015-01-01")
-end_date = pd.Timestamp("2020-01-01")
+end_date = pd.Timestamp("2024-01-01")
 
 # Generate customer_ids
 customer_ids = np.arange(1, num_customers + 1)
@@ -14,6 +14,7 @@ customer_ids = np.arange(1, num_customers + 1)
 data = []
 np.random.seed(0)  # For reproducibility
 for customer_id in customer_ids:
+    print(f"Generating data for customer {customer_id}/{num_customers}")
     order_dates = pd.to_datetime(
         np.random.uniform(start_date.value, end_date.value, orders_per_customer).astype(
             "datetime64[ns]"
@@ -21,7 +22,7 @@ for customer_id in customer_ids:
     )
     order_dates = np.sort(order_dates)  # Ensure the dates are in ascending order
     revenues = np.random.uniform(
-        4, 75, orders_per_customer
+        4, 150, orders_per_customer
     )  # Random revenue between 100 and 1000
     for order_id, (order_date, revenue) in enumerate(
         zip(order_dates, revenues), start=1
