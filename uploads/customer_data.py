@@ -2,10 +2,10 @@ import numpy as np
 import pandas as pd
 
 # Parameters
-num_customers = 10
+num_customers = 300
 orders_per_customer = 5
 start_date = pd.Timestamp("2015-01-01")
-end_date = pd.Timestamp("2020-01-01")
+end_date = pd.Timestamp("2024-01-01")
 
 # Generate customer_ids
 customer_ids = np.arange(1, num_customers + 1)
