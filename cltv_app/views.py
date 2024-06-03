@@ -87,7 +87,7 @@ def calculate_cltv(data):
 
         # Aggregate revenue by year and segment
         revenue_by_year_segment = (
-            data.groupby(["year", "segment"])["revenue"].sum().unstack(fill_value=0)
+            data.groupby(["year", "segment"])["revenue"].sum().unstack(fill_value=0, observed=False)
         )
 
         return {
