@@ -1,0 +1,42 @@
+{% load custom_filters %}
+
+{% comment %}
+<div class="card mt-3">
+    <div class="card-body">
+        <h5 class="card-title">Insights and Recommendations</h5>
+        <p class="card-text">
+            <strong>Short Customer Lifespan:</strong> The average customer lifespan of 0.04 years (around 15 days) suggests a high customer churn rate. Investigate why customers do not return after their initial purchases. Consider strategies to improve customer retention, such as loyalty programs or follow-up marketing campaigns.<br><br>
+            
+            <strong>High Transaction Volume but Low Retention:</strong> The high number of purchases and revenue indicates good market activity, but the retention is poor. Focus on enhancing the customer experience to encourage repeat purchases.<br><br>
+            
+            <strong>Reevaluate Customer Acquisition Strategies:</strong> Given the low CLTV, it’s crucial to optimize customer acquisition costs. However, the very low CAC suggests that the company is not spending much on acquiring customers, which might be fine but should be validated.<br><br>
+            
+            <strong>Improve Engagement:</strong> Since the APFR and Average Number of Purchases suggest customers do engage a few times, work on converting these few engagements into longer-term relationships. Implement engagement strategies such as personalized offers, excellent customer service, and regular communication.<br><br>
+            
+            <strong>Data Quality and Duration:</strong> The short period of data (about 10 months) might skew the lifespan calculation. Ensure that the dataset is comprehensive and covers a more extended period for more accurate insights.<br><br>
+            
+            <strong>Further Analysis:</strong> Conduct further segmentation to identify patterns within customer behavior. Perhaps certain customer segments (e.g., based on demographics or purchase behavior) exhibit longer lifespans and higher values.<br><br>
+            
+            <strong>Next Steps:</strong>
+            <ul>
+                <li>Extend Data Collection Period: Collect and analyze data over a more extended period to get a more accurate picture of customer lifespan and behavior.</li>
+                <li>Customer Feedback: Gather feedback from customers to understand why they might not be returning and address those issues.</li>
+                <li>Retention Programs: Implement programs focused on retaining customers beyond their initial purchases.</li>
+            </ul>
+        </p>
+    </div>
+</div> 
+{% endcomment %}
+
+{% if recommendations %}
+<div class="card mt-3">
+    <div class="card-body">
+        <h5 class="card-title">Insights and Recommendations</h5>
+        <ul class="card-text">
+            {% for recommendation in recommendations %}
+                <li class="m-4"><strong>{{ recommendation.title }}:</strong> {{ recommendation.description|safe }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}
