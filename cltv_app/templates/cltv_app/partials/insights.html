@@ -34,7 +34,10 @@
         <h5 class="card-title">Insights and Recommendations</h5>
         <ul class="card-text">
             {% for recommendation in recommendations %}
-                <li class="m-4"><strong>{{ recommendation.title }}:</strong> {{ recommendation.description|safe }}</li>
+                <li class="m-4">
+                    <strong>{{ recommendation.title }}:</strong> {{ recommendation.description|safe }}
+                    <p class="text-secondary">{{ recommendation.metrics}}</p>
+                </li>
             {% endfor %}
         </ul>
     </div>

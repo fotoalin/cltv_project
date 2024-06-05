@@ -1,4 +1,5 @@
 import matplotlib
+from ai.ai_recommendations import ai_generate_recommendations, check_llama3_state
 from cltv_app.recommendations import generate_recommendations
 
 matplotlib.use('Agg')
@@ -81,7 +82,7 @@ def calculate_cltv(data):
         # Aggregate revenue by year and segment
         revenue_by_year_segment = data.groupby(['year', 'segment'])['revenue'].sum().unstack(fill_value=0)
 
-        return {
+        cltv_result = {
             'cltv': float(cltv),
             'avg_customer_lifespan': float(avg_customer_lifespan),
             'total_revenue': float(total_revenue),
@@ -100,6 +101,7 @@ def calculate_cltv(data):
             'customer_recommendations': customer_data[['customer_id', 'recommendation']].to_dict(orient='records'),
             'revenue_by_year_segment': revenue_by_year_segment.to_dict(orient='index')
         }
+        return cltv_result
     except Exception as e:
         raise ValueError("Error in calculating CLTV: " + str(e))
 
@@ -169,7 +171,6 @@ def result(request, result_id):
             return redirect('upload_file')
         
         plot_url = create_dashboard(detailed_data['revenue_by_year_segment'])
-        recommendations = generate_recommendations(detailed_data)
 
     except CLTVResult.DoesNotExist:
         messages.error(request, 'Result not found.')
@@ -178,8 +179,24 @@ def result(request, result_id):
         'cltv_result': cltv_result, 
         'detailed_data': detailed_data, 
         'plot_url': plot_url,
-        'recommendations': recommendations
     })
+
+
+def recommendations(request):
+    cltv_data = request.session.get('detailed_data')
+
+    is_llama3_running = check_llama3_state()
+
+    if is_llama3_running:
+        recommendations = ai_generate_recommendations(cltv_data, title_length=10, description_length=100)
+    else:
+        recommendations = generate_recommendations(cltv_data)
+    context = {
+        'recommendations': recommendations,
+        'is_llama3_running': is_llama3_running
+    }
+    return render(request, 'cltv_app/partials/insights.html', context)
+
 
 def generate_report(data):
     response = HttpResponse(content_type='application/pdf')
@@ -192,6 +209,7 @@ def generate_report(data):
     p.showPage()
     p.save()
     return response
+
 
 def download_report(request, result_id):
     detailed_data = request.session.get('detailed_data')

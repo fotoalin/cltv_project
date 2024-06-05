@@ -1,0 +1,22 @@
+{% load static %}
+
+<style>
+    .htmx-indicator{
+        display:none;
+    }
+    .htmx-request .htmx-indicator{
+        display:inline;
+    }
+    .htmx-request.htmx-indicator{
+        display:inline;
+    }
+</style>
+
+
+<div id="loader" class="htmx-indicator">
+    <h3>Loading Insights and Recommendations...</h3>
+    <p>Please wait while we analyze the data and generate insights.</p>
+    <p>This may take several seconds...</p>
+    <img src="{% static 'images/loader.svg' %}" alt="Loading..." width="75">
+</div>
+
