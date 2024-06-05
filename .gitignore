@@ -234,3 +234,4 @@ pyrightconfig.json
 *.xls
 untitled_folder/
 *.pyc
+db.sqlite3
