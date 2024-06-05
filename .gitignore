@@ -324,3 +324,8 @@ pyrightconfig.json
 *.xls
 untitled_folder/
 *.pyc
+cltv_project/db.sqlite3
+cltv_project/__pycache__/
+llama3_response.txt
+
+
