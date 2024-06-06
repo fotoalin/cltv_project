@@ -1,5 +1,7 @@
 import matplotlib
-from ai.ai_recommendations import ai_generate_recommendations, check_llama3_state
+
+# from ai.ai_recommendations import ai_generate_recommendations, check_llama3_state
+from ai.openai_recommendations import ai_generate_recommendations
 from cltv_app.recommendations import generate_recommendations
 
 matplotlib.use('Agg')
@@ -182,20 +184,44 @@ def result(request, result_id):
     })
 
 
+# def recommendations(request):
+#     cltv_data = request.session.get('detailed_data')
+
+#     is_llama3_running = check_llama3_state()
+
+#     if is_llama3_running:
+#         recommendations = ai_generate_recommendations(cltv_data, title_length=10, description_length=100)
+#     else:
+#         recommendations = generate_recommendations(cltv_data)
+#     context = {
+#         'recommendations': recommendations,
+#         'is_llama3_running': is_llama3_running
+#     }
+#     return render(request, 'cltv_app/partials/insights.html', context)
+
+
 def recommendations(request):
     cltv_data = request.session.get('detailed_data')
 
-    is_llama3_running = check_llama3_state()
-
-    if is_llama3_running:
-        recommendations = ai_generate_recommendations(cltv_data, title_length=10, description_length=100)
-    else:
+    context = {}
+    try:
+        recommendations = ai_generate_recommendations(cltv_data, title_length=10, description_length=150)
+        context['recommendations'] = recommendations
+        context['ai_mode'] = True
+    except Exception as e:
+        print("Error in generating recommendations:", e)
+        print("Falling back to default recommendations.")
         recommendations = generate_recommendations(cltv_data)
-    context = {
-        'recommendations': recommendations,
-        'is_llama3_running': is_llama3_running
-    }
+        context['recommendations'] = recommendations
+        context['ai_mode'] = False
+    
+    if recommendations == []:
+        recommendations = generate_recommendations(cltv_data)
+        context['recommendations'] = recommendations  # Update context with fallback recommendations
+        context['ai_mode'] = False
+    
     return render(request, 'cltv_app/partials/insights.html', context)
+
 
 
 def generate_report(data):
