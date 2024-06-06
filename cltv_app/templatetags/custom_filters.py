@@ -14,3 +14,10 @@ def truncate_float(value, decimal_places=2):
         return f"{integer_part}.{truncated_decimal_part}"
     except (ValueError, TypeError):
         return value
+
+
+@register.filter
+def split_string(value, separator=","):
+    if not value or not isinstance(value, str):
+        return value
+    return value.split(separator)

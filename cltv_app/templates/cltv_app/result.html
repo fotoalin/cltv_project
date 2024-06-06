@@ -24,7 +24,7 @@
                 <strong>Average Purchase Frequency Rate (APFR):</strong> {{ detailed_data.apfr|truncate_float }}<br>
                 <strong>Average Number of Purchases:</strong> {{ detailed_data.avg_num_purchases|truncate_float }}<br>
                 <strong>Customer Value (CV):</strong> £{{ detailed_data.cv|truncate_float }}<br>
-                <strong>Time Interval:</strong> {{ detailed_data.overall_start_date }} to {{ detailed_data.overall_end_date }}<br>
+                <strong>Time Interval:</strong> <span class="badge rounded-pill bg-danger">{{ detailed_data.overall_start_date|split_string:'T'|first  }}</span> to <span class="badge rounded-pill bg-danger">{{ detailed_data.overall_end_date|split_string:'T'|first }}</span><br>
                 <strong>Customer Acquisition Cost (CAC):</strong> £{{ detailed_data.cac|truncate_float }}<br>
             </p>
         </div>
