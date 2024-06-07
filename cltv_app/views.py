@@ -226,6 +226,7 @@ def recommendations(request):
     recommendations = generate_recommendations(cltv_data)
     context['recommendations'] = recommendations  # Update context with fallback recommendations
     context['ai_mode'] = False
+    
     return render(request, 'cltv_app/partials/insights.html', context)
 
 

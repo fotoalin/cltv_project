@@ -14,9 +14,8 @@
     <title>{% block title %}Django App{% endblock %} - Customer Lifetime Value</title>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-slate-700 dark:text-gray-200 text-base font-sans">
-    <div class="">
         <header class="py-4">
-            <nav class="container mx-auto flex items-center justify-between">
+            <nav class="container mx-auto px-8 flex items-center justify-between">
                 <a href="{% url 'home' %}" class="text-xl font-bold">CLTV Project</a>
                 <ul class="flex space-x-4 py-8">
                     {% if cltv_result %}
@@ -38,6 +37,5 @@
         <footer class="bg-orange-300/70 py-32 text-center dark:bg-gray-800">
             <span class="container mx-auto">&copy; 2024 CLTV Project. All rights reserved.</span>
         </footer>
-    </div>
 </body>
 </html>
