@@ -1,0 +1,43 @@
+{% load static %}
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.0/dist/cdn.min.js" defer></script>
+    <script src="https://unpkg.com/@fylgja/alpinejs-dialog@2.0.1/dist/index.min.js" defer></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>{% block title %}Django App{% endblock %} - Customer Lifetime Value</title>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-slate-700 dark:text-gray-200 text-base font-sans">
+    <div class="">
+        <header class="py-4">
+            <nav class="container mx-auto flex items-center justify-between">
+                <a href="{% url 'home' %}" class="text-xl font-bold">CLTV Project</a>
+                <ul class="flex space-x-4 py-8">
+                    {% if cltv_result %}
+                        <li class="transform hover:scale-105 transition duration-200"><a href="#segmentation" class="py-8 px-8 bg-orange-200 rounded-full hover:bg-orange-200/80 dark:bg-gray-800 dark:hover:bg-gray-800/80">Segmentation</a></li>
+                        <li class="transform hover:scale-105 transition duration-200"><a href="#insights" class="py-8 px-8 bg-orange-200 rounded-full hover:bg-orange-200/80 dark:bg-gray-800 dark:hover:bg-gray-800/80">Insights</a></li>
+                        <li class="transform hover:scale-105 transition duration-200"><a href="{% url 'download_report' cltv_result.id %}" class="py-8 px-8 bg-orange-200 rounded-full hover:bg-orange-200/80 dark:bg-gray-800 dark:hover:bg-gray-800/80">Download</a></li>
+                    {% else %}
+                        <li class="transform hover:scale-105 transition duration-200"><a href="#" class="py-8 px-8 bg-orange-200 rounded-full hover:bg-orange-200/80 dark:bg-gray-800 dark:hover:bg-gray-800/80">About</a></li>
+                        <li class="transform hover:scale-105 transition duration-200"><a href="#" class="py-8 px-8 bg-orange-200 rounded-full hover:bg-orange-200/80 dark:bg-gray-800 dark:hover:bg-gray-800/80">Contact</a></li>
+                    {% endif %}
+                    <li class="transform hover:scale-105 transition duration-200"><a href="{% url 'upload_file' %}" class="py-8 px-8 bg-blue-500 hover:bg-blue-500/90 text-white rounded-full dark:bg-orange-700 dark:hover:bg-orange-600">New CLTV</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main class="">
+            {% block content %}
+            {% endblock %}
+        </main>
+        <footer class="bg-orange-300/70 py-32 text-center dark:bg-gray-800">
+            <span class="container mx-auto">&copy; 2024 CLTV Project. All rights reserved.</span>
+        </footer>
+    </div>
+</body>
+</html>

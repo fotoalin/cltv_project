@@ -20,6 +20,9 @@ from .forms import UploadFileForm
 from .models import CLTVResult, CustomerData
 
 
+def home(request):
+    return render(request, 'cltv_app/home.html')
+
 def calculate_cltv(data):
     try:
         data['order_date'] = pd.to_datetime(data['order_date'], utc=True)  # Ensure dates are parsed correctly with timezone
@@ -70,7 +73,7 @@ def calculate_cltv(data):
         data = data.merge(customer_data[['customer_id', 'segment']], on='customer_id', how='left')
 
         # Generate recommendations
-        def get_recommendations(segment):
+        def get_segmentation(segment):
             recommendations = {
                 'Low': 'Offer discounts or promotions to increase engagement.',
                 'Medium': 'Provide loyalty programs and personalized communication.',
@@ -79,7 +82,7 @@ def calculate_cltv(data):
             }
             return recommendations.get(segment, 'No recommendation available.')
 
-        customer_data['recommendation'] = customer_data['segment'].apply(get_recommendations)
+        customer_data['recommendation'] = customer_data['segment'].apply(get_segmentation)
 
         # Aggregate revenue by year and segment
         revenue_by_year_segment = data.groupby(['year', 'segment'])['revenue'].sum().unstack(fill_value=0)
@@ -204,22 +207,25 @@ def recommendations(request):
     cltv_data = request.session.get('detailed_data')
 
     context = {}
-    try:
-        recommendations = ai_generate_recommendations(cltv_data, title_length=10, description_length=150)
-        context['recommendations'] = recommendations
-        context['ai_mode'] = True
-    except Exception as e:
-        print("Error in generating recommendations:", e)
-        print("Falling back to default recommendations.")
-        recommendations = generate_recommendations(cltv_data)
-        context['recommendations'] = recommendations
-        context['ai_mode'] = False
+    # try:
+    #     recommendations = ai_generate_recommendations(cltv_data, title_length=10, description_length=150)
+    #     context['recommendations'] = recommendations
+    #     context['ai_mode'] = True
+    # except Exception as e:
+    #     print("Error in generating recommendations:", e)
+    #     print("Falling back to default recommendations.")
+    #     recommendations = generate_recommendations(cltv_data)
+    #     context['recommendations'] = recommendations
+    #     context['ai_mode'] = False
     
-    if recommendations == []:
-        recommendations = generate_recommendations(cltv_data)
-        context['recommendations'] = recommendations  # Update context with fallback recommendations
-        context['ai_mode'] = False
+    # if recommendations == []:
+    #     recommendations = generate_recommendations(cltv_data)
+    #     context['recommendations'] = recommendations  # Update context with fallback recommendations
+    #     context['ai_mode'] = False
     
+    recommendations = generate_recommendations(cltv_data)
+    context['recommendations'] = recommendations  # Update context with fallback recommendations
+    context['ai_mode'] = False
     return render(request, 'cltv_app/partials/insights.html', context)
 
 

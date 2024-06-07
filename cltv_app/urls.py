@@ -2,10 +2,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from .views import download_report, recommendations, result, upload_file
+from .views import download_report, home, recommendations, result, upload_file
 
 urlpatterns = [
-    path("", upload_file, name="upload_file"),
+    path("", home, name="home"),
+    path("upload/", upload_file, name="upload_file"),
     path("result/<int:result_id>/", result, name="result"),
     path("download_report/<int:result_id>/", download_report, name="download_report"),
     path("recommendations/", recommendations, name="recommendations")
