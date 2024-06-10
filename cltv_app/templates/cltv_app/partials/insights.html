@@ -1,35 +1,7 @@
 {% load custom_filters %}
 
-{% comment %}
-<div class="card mt-3">
-    <div class="card-body">
-        <h5 class="card-title">Insights and Recommendations</h5>
-        <p class="card-text">
-            <strong>Short Customer Lifespan:</strong> The average customer lifespan of 0.04 years (around 15 days) suggests a high customer churn rate. Investigate why customers do not return after their initial purchases. Consider strategies to improve customer retention, such as loyalty programs or follow-up marketing campaigns.<br><br>
-            
-            <strong>High Transaction Volume but Low Retention:</strong> The high number of purchases and revenue indicates good market activity, but the retention is poor. Focus on enhancing the customer experience to encourage repeat purchases.<br><br>
-            
-            <strong>Reevaluate Customer Acquisition Strategies:</strong> Given the low CLTV, it’s crucial to optimize customer acquisition costs. However, the very low CAC suggests that the company is not spending much on acquiring customers, which might be fine but should be validated.<br><br>
-            
-            <strong>Improve Engagement:</strong> Since the APFR and Average Number of Purchases suggest customers do engage a few times, work on converting these few engagements into longer-term relationships. Implement engagement strategies such as personalized offers, excellent customer service, and regular communication.<br><br>
-            
-            <strong>Data Quality and Duration:</strong> The short period of data (about 10 months) might skew the lifespan calculation. Ensure that the dataset is comprehensive and covers a more extended period for more accurate insights.<br><br>
-            
-            <strong>Further Analysis:</strong> Conduct further segmentation to identify patterns within customer behavior. Perhaps certain customer segments (e.g., based on demographics or purchase behavior) exhibit longer lifespans and higher values.<br><br>
-            
-            <strong>Next Steps:</strong>
-            <ul>
-                <li>Extend Data Collection Period: Collect and analyze data over a more extended period to get a more accurate picture of customer lifespan and behavior.</li>
-                <li>Customer Feedback: Gather feedback from customers to understand why they might not be returning and address those issues.</li>
-                <li>Retention Programs: Implement programs focused on retaining customers beyond their initial purchases.</li>
-            </ul>
-        </p>
-    </div>
-</div> 
-{% endcomment %}
-
-{% if recommendations %}
-<div class="card my-16">
+{% if insights %}
+<div class="w-full mx-auto p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 dark:bg-gray-800 dark:border-gray-700 my-16">
     <div class="card-body">
         <div class="card-title flex gap-2 items-center">
             {% if ai_mode %}
@@ -42,16 +14,18 @@
                 </svg>
             {% endif %}
 
-            <h5 class="text-3xl font-bold my-8">Insights and Recommendations</h5>
+            <h5 class="text-3xl font-bold text-gray-900 dark:text-white">Insights and Recommendations</h5>
         </div>
-        <ul class="card-text">
-            {% for recommendation in recommendations %}
-                <li class="m-4">
-                    <strong>{{ recommendation.title }}:</strong> {{ recommendation.description|safe }}
-                    <p class="text-secondary">{{ recommendation.metrics}}</p>
+        <ul class="my-4 space-y-8 py-8">
+            {% for insight in insights %}
+                <li class="p-3 py-8 bg-gray-50 dark:bg-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-500 shadow">
+                    <strong class="text-base font-bold text-gray-900 dark:text-white">{{ insight.title }}:</strong> 
+                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ insight.description|safe }}</span>
+                    <p class="text-xs font-medium text-gray-500 dark:text-gray-400">{{ insight.metrics }}</p>
                 </li>
             {% endfor %}
         </ul>
+        <p class="text-xs font-medium text-gray-500">For more information about Customer Life Time Value, please refer to the <a href="https://cio-wiki.org/wiki/Customer_Lifetime_Value" target="_blank" class="text-blue-500 hover:underline">cio-wiki.org</a>.</p>
     </div>
 </div>
 {% endif %}

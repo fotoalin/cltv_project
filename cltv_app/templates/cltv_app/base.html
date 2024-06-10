@@ -6,10 +6,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.0/dist/cdn.min.js" defer></script>
-    <script src="https://unpkg.com/@fylgja/alpinejs-dialog@2.0.1/dist/index.min.js" defer></script>
+    <link rel="stylesheet" href="{% static 'css/flowbite-3.4.1.min.css' %}">
+    <script src="{% static 'js/tailwind-3.4.4.min.js' %}" defer></script>
+    <script src="{% static 'js/flowbite-2.3.0.min.js' %}" defer></script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>{% block title %}Django App{% endblock %} - Customer Lifetime Value</title>
 </head>
@@ -37,5 +38,6 @@
         <footer class="bg-orange-300/70 py-32 text-center dark:bg-gray-800">
             <span class="container mx-auto">&copy; 2024 CLTV Project. All rights reserved.</span>
         </footer>
+        
 </body>
 </html>
