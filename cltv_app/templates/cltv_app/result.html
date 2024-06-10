@@ -12,116 +12,9 @@
     <div class="container mx-auto py-12 px-4">
         <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <!-- CLTV Card -->
-            <div class="z-10 relative bg-orange-100 dark:bg-slate-800/5 ring-1 ring-orange-500 dark:ring-orange-500/50 shadow-lg rounded-lg p-8 text-center col-span-1 lg:col-span-2 xl:col-span-2" x-data="{ open: false }">
-                <button class="absolute top-0 right-0 p-4 rounded-full bg-transparent hover:bg-orange-300/50 dark:hover:bg-orange-300 text-orange-500 transition duration-200" @mouseover="open = true" @mouseleave="open = false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                    </svg>
-                </button>
-                <h4 class="text-3xl font-bold text-orange-400 dark:text-orange-400 mb-4">Customer Lifetime Value (CLTV)</h4>
-                <p class="text-4xl font-extrabold text-sky-600 dark:text-sky-300/80">£{{ cltv_result.cltv|truncate_float }}</p>
-                <div class="w-full absolute top-8 right-0 transform -translate-x-16 bg-white dark:bg-slate-800 p-4 ring-1 rounded-2xl shadow-xl" x-show="open">
-                    <p class="text-xl text-gray-800 dark:text-slate-300">The predicted revenue a customer will generate over their entire relationship with your business.</p>
-                </div>
-            </div>
-    
+            {% include 'cltv_app/partials/value_card.html' with featured=True text="Customer Lifetime Value (CLTV)" value=detailed_data.cltv|truncate_float description="The predicted revenue a customer will generate over their entire relationship with your business." %}
+
             <!-- Other Cards -->
-            <div class="z-10 relative bg-white dark:bg-slate-800 ring-1 ring-gray-300 dark:ring-gray-700 shadow-lg rounded-lg p-8 text-center" x-data="{ open: false }">
-                <button class="absolute top-0 right-0 p-4 rounded-full bg-transparent hover:bg-gray-300/50 dark:hover:bg-gray-300 text-gray-500 transition duration-200" @mouseover="open = true" @mouseleave="open = false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                    </svg>
-                </button>
-                <h5 class="text-xl font-bold text-orange-400 mb-4">Average Customer Lifespan</h5>
-                <p class="text-2xl font-semibold text-gray-800 dark:text-slate-300">{{ detailed_data.avg_customer_lifespan|truncate_float }} years</p>
-                <div class="w-full absolute top-8 right-0 transform -translate-x-16 bg-white dark:bg-slate-800 p-4 ring-1 rounded-2xl shadow-xl" x-show="open">
-                    <p class="text-xl text-gray-800 dark:text-slate-300">The average duration a customer remains active, in years.</p>
-                </div>
-            </div>
-            <div class="z-10 relative bg-white dark:bg-slate-800 ring-1 ring-gray-300 dark:ring-gray-700 shadow-lg rounded-lg p-8 text-center" x-data="{ open: false }">
-                <button class="absolute top-0 right-0 p-4 rounded-full bg-transparent hover:bg-gray-300/50 dark:hover:bg-gray-300 text-gray-500 transition duration-200" @mouseover="open = true" @mouseleave="open = false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                    </svg>
-                </button>
-                <h5 class="text-xl font-bold text-orange-400 mb-4">Total Revenue</h5>
-                <p class="text-2xl font-semibold text-gray-800 dark:text-slate-300">£{{ detailed_data.total_revenue|truncate_float }}</p>
-                <div class="w-full absolute top-8 right-0 transform -translate-x-16 bg-white dark:bg-slate-800 p-4 ring-1 rounded-2xl shadow-xl" x-show="open">
-                    <p class="text-xl text-gray-800 dark:text-slate-300">The total revenue generated by all customers during the specified time interval.</p>
-                </div>
-            </div>
-            <div class="z-10 relative bg-white dark:bg-slate-800 ring-1 ring-gray-300 dark:ring-gray-700 shadow-lg rounded-lg p-8 text-center" x-data="{ open: false }">
-                <button class="absolute top-0 right-0 p-4 rounded-full bg-transparent hover:bg-gray-300/50 dark:hover:bg-gray-300 text-gray-500 transition duration-200" @mouseover="open = true" @mouseleave="open = false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                    </svg>
-                </button>
-                <h5 class="text-xl font-bold text-orange-400 mb-4">Number of Purchases</h5>
-                <p class="text-2xl font-semibold text-gray-800 dark:text-slate-300">{{ detailed_data.num_purchases }}</p>
-                <div class="w-full absolute top-8 right-0 transform -translate-x-16 bg-white dark:bg-slate-800 p-4 ring-1 rounded-2xl shadow-xl" x-show="open">
-                    <p class="text-xl text-gray-800 dark:text-slate-300">The total number of purchases made by all customers during the specified time interval.</p>
-                </div>
-            </div>
-            <div class="z-10 relative bg-white dark:bg-slate-800 ring-1 ring-gray-300 dark:ring-gray-700 shadow-lg rounded-lg p-8 text-center" x-data="{ open: false }">
-                <button class="absolute top-0 right-0 p-4 rounded-full bg-transparent hover:bg-gray-300/50 dark:hover:bg-gray-300 text-gray-500 transition duration-200" @mouseover="open = true" @mouseleave="open = false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                    </svg>
-                </button>
-                <h5 class="text-xl font-bold text-orange-400 mb-4">Number of Customers</h5>
-                <p class="text-2xl font-semibold text-gray-800 dark:text-slate-300">{{ detailed_data.num_customers }}</p>
-                <div class="w-full absolute top-8 right-0 transform -translate-x-16 bg-white dark:bg-slate-800 p-4 ring-1 rounded-2xl shadow-xl" x-show="open">
-                    <p class="text-xl text-gray-800 dark:text-slate-300">The total number of unique customers.</p>
-                </div>
-            </div>
-            <div class="z-10 relative bg-white dark:bg-slate-800 ring-1 ring-gray-300 dark:ring-gray-700 shadow-lg rounded-lg p-8 text-center" x-data="{ open: false }">
-                <button class="absolute top-0 right-0 p-4 rounded-full bg-transparent hover:bg-gray-300/50 dark:hover:bg-gray-300 text-gray-500 transition duration-200" @mouseover="open = true" @mouseleave="open = false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                    </svg>
-                </button>
-                <h5 class="text-xl font-bold text-orange-400 mb-4">Average Purchase Value (APV)</h5>
-                <p class="text-2xl font-semibold text-gray-800 dark:text-slate-300">£{{ detailed_data.apv|truncate_float }}</p>
-                <div class="w-full absolute top-8 right-0 transform -translate-x-16 bg-white dark:bg-slate-800 p-4 ring-1 rounded-2xl shadow-xl" x-show="open">
-                    <p class="text-xl text-gray-800 dark:text-slate-300">he average value of each purchase. Calculated as Total Revenue divided by Number of Purchases.</p>
-                </div>
-            </div>
-            <div class="z-10 relative bg-white dark:bg-slate-800 ring-1 ring-gray-300 dark:ring-gray-700 shadow-lg rounded-lg p-8 text-center" x-data="{ open: false }">
-                <button class="absolute top-0 right-0 p-4 rounded-full bg-transparent hover:bg-gray-300/50 dark:hover:bg-gray-300 text-gray-500 transition duration-200" @mouseover="open = true" @mouseleave="open = false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                    </svg>
-                </button>
-                <h5 class="text-xl font-bold text-orange-400 mb-4">Average Purchase Frequency Rate (APFR)</h5>
-                <p class="text-2xl font-semibold text-gray-800 dark:text-slate-300">{{ detailed_data.apfr|truncate_float }}</p>
-                <div class="w-full absolute top-8 right-0 transform -translate-x-16 bg-white dark:bg-slate-800 p-4 ring-1 rounded-2xl shadow-xl" x-show="open">
-                    <p class="text-xl text-gray-800 dark:text-slate-300">The average number of purchases per customer. Calculated as Number of Purchases divided by Number of Customers.</p>
-                </div>
-            </div>
-            <div class="z-10 relative bg-white dark:bg-slate-800 ring-1 ring-gray-300 dark:ring-gray-700 shadow-lg rounded-lg p-8 text-center" x-data="{ open: false }">
-                <button class="absolute top-0 right-0 p-4 rounded-full bg-transparent hover:bg-gray-300/50 dark:hover:bg-gray-300 text-gray-500 transition duration-200" @mouseover="open = true" @mouseleave="open = false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                    </svg>
-                </button>
-                <h5 class="text-xl font-bold text-orange-400 mb-4">Average Number of Purchases</h5>
-                <p class="text-2xl font-semibold text-gray-800 dark:text-slate-300">{{ detailed_data.avg_num_purchases|truncate_float }}</p>
-                <div class="w-full absolute top-8 right-0 transform -translate-x-16 bg-white dark:bg-slate-800 p-4 ring-1 rounded-2xl shadow-xl" x-show="open">
-                    <p class="text-xl text-gray-800 dark:text-slate-300">The average number of purchases made by each customer. Calculated as Number of Purchases divided by Number of Customers.</p>
-                </div>
-            </div>
-            <div class="relative bg-white dark:bg-slate-800 ring-1 ring-gray-300 dark:ring-gray-700 shadow-lg rounded-lg p-8 text-center" x-data="{ open: false }">
-                <button class="absolute top-0 right-0 p-4 rounded-full bg-transparent hover:bg-gray-300/50 dark:hover:bg-gray-300 text-gray-500 transition duration-200" @mouseover="open = true" @mouseleave="open = false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                    </svg>
-                </button>
-                <h5 class="text-xl font-bold text-orange-400 mb-4">Customer Value (CV)</h5>
-                <p class="text-2xl font-semibold text-gray-800 dark:text-slate-300">£{{ detailed_data.cv|truncate_float }}</p>
-                <div class="w-full absolute top-8 right-0 transform -translate-x-16 bg-white dark:bg-slate-800 p-4 ring-1 rounded-2xl shadow-xl" x-show="open">
-                    <p class="text-xl text-gray-800 dark:text-slate-300">The average value of each customer. Calculated as Total Revenue divided by Number of Customers.</p>
-                </div>
-            </div>
             <div class="relative bg-white dark:bg-slate-800 ring-1 ring-gray-300 dark:ring-gray-700 shadow-lg rounded-lg p-8 text-center" x-data="{ open: false }">
                 <button class="absolute top-0 right-0 p-4 rounded-full bg-transparent hover:bg-gray-300/50 dark:hover:bg-gray-300 text-gray-500 transition duration-200" @mouseover="open = true" @mouseleave="open = false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
@@ -138,44 +31,20 @@
                     <p class="text-xl text-gray-800 dark:text-slate-300">The time period considered for the analysis.</p>
                 </div>
             </div>
-            <div class="relative bg-white dark:bg-slate-800 ring-1 ring-gray-300 dark:ring-gray-700 shadow-lg rounded-lg p-8 text-center" x-data="{ open: false }">
-                <button class="absolute top-0 right-0 p-4 rounded-full bg-transparent hover:bg-gray-300/50 dark:hover:bg-gray-300 text-gray-500 transition duration-200" @mouseover="open = true" @mouseleave="open = false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-                    </svg>
-                </button>
-                <h5 class="text-xl font-bold text-orange-400 mb-4">Customer Acquisition Cost (CAC)</h5>
-                <p class="text-2xl font-semibold text-gray-800 dark:text-slate-300">£{{ detailed_data.cac|truncate_float }}</p>
-                <div class="w-full absolute top-8 right-0 transform -translate-x-16 bg-white dark:bg-slate-800 p-4 ring-1 rounded-2xl shadow-xl" x-show="open">
-                    <p class="text-xl text-gray-800 dark:text-slate-300">The amount the company can afford to spend on acquiring a new customer. Typically, this is a percentage of the CLTV. In this case, we assume the company can spend up to 30% of the CLTV.</p>
-                </div>
-            </div>
+            
+            {% include 'cltv_app/partials/value_card.html' with featured=False text="Average Customer Lifespan" value=detailed_data.avg_customer_lifespan|truncate_float description="The average duration a customer remains active, in years." %}
+            {% include 'cltv_app/partials/value_card.html' with featured=False text="Total Revenue" value=detailed_data.total_revenue|truncate_float description="The total revenue generated by all customers during the specified time interval." %}
+            {% include 'cltv_app/partials/value_card.html' with featured=False text="Number of Purchases" value=detailed_data.num_purchases description="The total number of purchases made by all customers during the specified time interval." %}
+            {% include 'cltv_app/partials/value_card.html' with featured=False text="Number of Customers" value=detailed_data.num_customers description="The total number of unique customers." %}
+            {% include 'cltv_app/partials/value_card.html' with featured=False text="Average Purchase Value (APV)" value=detailed_data.apv|truncate_float description="The average value of each purchase. Calculated as Total Revenue divided by Number of Purchases." %}
+            {% include 'cltv_app/partials/value_card.html' with featured=False text="Average Purchase Frequency Rate (APFR)" value=detailed_data.apfr|truncate_float description="The average number of purchases per customer. Calculated as Number of Purchases divided by Number of Customers." %}
+            {% include 'cltv_app/partials/value_card.html' with featured=False text="Average Number of Purchases" value=detailed_data.avg_num_purchases|truncate_float description="The average number of purchases made by each customer. Calculated as Number of Purchases divided by Number of Customers." %}
+            {% include 'cltv_app/partials/value_card.html' with featured=False text="Customer Value (CV)" value=detailed_data.cv|truncate_float description="The average revenue generated by each customer. Calculated as Total Revenue divided by Number of Customers." %}
+            {% include 'cltv_app/partials/value_card.html' with featured=False text="Customer Acquisition Cost (CAC)" value=detailed_data.cac|truncate_float description="The cost of acquiring a new customer. (Typically 30% of CLTV)" %}
+
         </div>
     </div>
 
-    {% comment %} 
-    <a href="{% url 'download_report' cltv_result.id %}" class="btn btn-secondary mt-3">Download Report</a>
-    <a href="{% url 'upload_file' %}" class="btn btn-primary mt-3">Upload Another File</a>
-    
-    <div class="card mt-3">
-        <div class="card-body">
-            <h5 class="card-title">Explanation of Metrics</h5>
-            <ul>
-                <li><strong>Customer Lifetime Value (CLTV):</strong> The predicted revenue a customer will generate over their entire relationship with your business.</li>
-                <li><strong>Average Customer Lifespan:</strong> The average duration a customer remains active, in years.</li>
-                <li><strong>Total Revenue:</strong> The total revenue generated by all customers during the specified time interval.</li>
-                <li><strong>Number of Purchases:</strong> The total number of purchases made by all customers during the specified time interval.</li>
-                <li><strong>Number of Customers:</strong> The total number of unique customers.</li>
-                <li><strong>Average Purchase Value (APV):</strong> The average value of each purchase. Calculated as Total Revenue divided by Number of Purchases.</li>
-                <li><strong>Average Purchase Frequency Rate (APFR):</strong> The average number of purchases per customer. Calculated as Number of Purchases divided by Number of Customers.</li>
-                <li><strong>Average Number of Purchases:</strong> The average number of purchases made by each customer, calculated by dividing the total number of purchases by the number of customers.</li>
-                <li><strong>Customer Value (CV):</strong> The average revenue generated per customer. Calculated as APV multiplied by APFR.</li>
-                <li><strong>Time Interval:</strong> The time span between the earliest start date and the latest end date in the dataset.</li>
-                <li><strong>Customer Acquisition Cost (CAC):</strong> The amount the company can afford to spend on acquiring a new customer. Typically, this is a percentage of the CLTV. In this case, we assume the company can spend up to 30% of the CLTV.</li>
-            </ul>
-        </div>
-    </div>
-    {% endcomment %}
 
     <div id="segmentation" class="card my-16">
         <div class="card-body">
